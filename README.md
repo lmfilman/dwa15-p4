@@ -23,7 +23,7 @@ This application demonstrates knowledge of the Laravel framework, the MVC patter
 * Users can plan when to cook recipes on a calendar
 
 ### Wireframe:
-![](https://github.com/lmfilman/dwa15-p4/blob/master/wireframe_design.png)
+![](https://github.com/lmfilman/dwa15-p4/blob/master/design_wireframe.png)
 
 ## Extra details:
 This project uses the Bootstrap framework: http://getbootstrap.com/

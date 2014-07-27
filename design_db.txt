@@ -1,0 +1,23 @@
+concoctions:
+id INT AUTO_INCREMENT PRIMARY KEY
+title VARCHAR
+ingredients TEXT
+directions TEXT
+photo BLOB
+user_id INT FOREIGN KEY
+created_at
+updated_at
+
+users:
+id INT AUTO_INCREMENT PRIMARY KEY
+name VARCHAR
+email VARCHAR
+password VARCHAR
+
+tags:
+id INT
+name VARCHAR
+
+concoctions_tags:
+concoction_id INT FOREIGN KEY
+tag_id INT FOREIGN KEY
