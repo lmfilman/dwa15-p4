@@ -2,7 +2,7 @@
 ## Live URL of the project:
 http://lmfilman-dwa15-p4.gopagoda.com
 ## Description:
-A Laravel web application which allows users to manage their own personal cookbook.  Users can add new recipes and search existing ones when they need to find a meal to fit their needs.  User cookbooks are kept private by default, but users can share recipes or their entire cookbook with friends.
+A Laravel web application which allows users to manage their own personal cookbook.  Users can add new recipes and search existing ones when they need to find a meal to fit their needs.
 
 This application demonstrates knowledge of the Laravel framework, the MVC pattern, Object-relational mapping with Eloquent, database migrations, user authentication, ..... edit this ....
 
@@ -15,10 +15,12 @@ This application demonstrates knowledge of the Laravel framework, the MVC patter
 * Users can CRUD (create, read, update, delete) recipes
 * Users can CRUD tags for recipes
 * Users can search recipes
-* Users can share recipes with 
 
 #### Nice to have:
-* Users can plan on a calendar when they intend to cook future meals
+* Users can export recipes or the entire cookbook
+* Users can add friends in app and view friends cookbooks
+* Users can give copies of recipes to friends and those friends can accept
+* Users can plan when to cook recipes on a calendar
 
 ### Wireframe:
 ![](https://github.com/lmfilman/dwa15-p4/blob/master/wireframe_design.png)
