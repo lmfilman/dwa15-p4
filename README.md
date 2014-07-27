@@ -6,18 +6,24 @@ A Laravel web application which allows users to manage their own personal cookbo
 
 This application demonstrates knowledge of the Laravel framework, the MVC pattern, Object-relational mapping with Eloquent, database migrations, user authentication, ..... edit this ....
 
-## Requirements:
-### Need to have:
+## Design:
+
+### Requirements:
+
+#### Need to have:
 * Users can login
 * Users can CRUD (create, read, update, delete) recipes
 * Users can CRUD tags for recipes
 * Users can search recipes
-* Users can share recipes with friends
-### Nice to have:
+* Users can share recipes with 
+
+#### Nice to have:
 * Users can plan on a calendar when they intend to cook future meals
 
+### Wireframe:
+![](https://github.com/lmfilman/dwa15-p4/blob/master/wireframe_design.png)
 
-## Extra details
+## Extra details:
 This project uses the Bootstrap framework: http://getbootstrap.com/
 
 ....Edit this....
