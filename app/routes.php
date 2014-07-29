@@ -37,7 +37,7 @@ Route::get('/add-concoction', function()
 		->with('ingredients', '')
 		->with('directions', '')
 		->with('tags', '')
-		->with('i_made_this', false)
+		->with('user_made_this', false)
 		;
 });
 
@@ -50,7 +50,7 @@ Route::post('/add-concoction', function()
 	$ingredients = trim(Input::get('ingredients'));
 	$directions = trim(Input::get('directions'));
 	$tags = trim(Input::get('tags'));						//For now, space separated
-	$i_made_this = Input::get('i_made_this');
+	$user_made_this = Input::get('user_made_this');
 
 	//Form validation
 	if ($title === '') {
@@ -75,7 +75,7 @@ Route::post('/add-concoction', function()
 			->with('ingredients', $ingredients)
 			->with('directions', $directions)
 			->with('tags', $tags)
-			->with('i_made_this', $i_made_this)
+			->with('user_made_this', $user_made_this)
 			;
 	} else {
 		//Replace user later
@@ -86,6 +86,10 @@ Route::post('/add-concoction', function()
 		$concoction->reference_link = $reference_link;
 		$concoction->ingredients = $ingredients;
 		$concoction->directions = $directions;
+		if($user_made_this == null){
+			$user_made_this = false;
+		}
+		$concoction->user_made_this = $user_made_this;
 
 		//Replace tags later
 		$dinner = Tag::where('name', '=', 'dinner')->first();
@@ -95,7 +99,7 @@ Route::post('/add-concoction', function()
 
 		$concoction->tags()->attach($dinner); 
 
-		return View::make('view_concoction')->with('id', 12345);
+		return Redirect::to('/view-concoction/1234');
 	}
 
 	
@@ -103,15 +107,85 @@ Route::post('/add-concoction', function()
 
 Route::get('/edit-concoction/{id}', function($id)
 {
-	return View::make('edit_concoction')->with('id', $id);
-});
-/* TODO :
-Route::post('/edit-concoction/{id}', function($id)
-{
-	return View::make('edit_concoction')->with('id', $id);
+	//Get concoction from database by id
+	$concoction = Concoction::findOrFail($id);
+
+	return View::make('edit_concoction')
+		->with('user_input_error', false)
+		->with('user_input_error_message', '')	
+		->with('title', $concoction->title)
+		->with('reference_link', $concoction->reference_link)
+		->with('ingredients', $concoction->ingredients)
+		->with('directions', $concoction->directions)
+		->with('tags', $concoction->tags)
+		->with('user_made_this', $concoction->user_made_this)
+
+		->with('id', $id)
+		;
 });
 
-*/
+Route::post('/edit-concoction/{id}', function($id)
+{
+	$user_input_error = false;
+	$user_input_error_message = "";
+	$title = trim(Input::get('title'));
+	$reference_link = trim(Input::get('reference_link')); //Not required
+	$ingredients = trim(Input::get('ingredients'));
+	$directions = trim(Input::get('directions'));
+	$tags = trim(Input::get('tags'));						//For now, space separated
+	$user_made_this = Input::get('user_made_this');
+
+	//Form validation
+	if ($title === '') {
+		$user_input_error = true;
+		$user_input_error_message = "Your Concoction needs a title!";
+	}
+	elseif ($ingredients === '') {
+		$user_input_error = true;
+		$user_input_error_message = "Your Concoction needs ingredients!";
+	}
+	elseif ($directions === '') {
+		$user_input_error = true;
+		$user_input_error_message = "Your Concoction needs directions!";
+	}
+
+	if ($user_input_error){
+		return View::make('edit_concoction')
+			->with('user_input_error', $user_input_error)
+			->with('user_input_error_message', $user_input_error_message)	
+			->with('title', $title)
+			->with('reference_link', $reference_link)
+			->with('ingredients', $ingredients)
+			->with('directions', $directions)
+			->with('tags', $tags)
+			->with('user_made_this', $user_made_this)
+			->with('id', $id)
+			;
+	} else {
+		//DIFFERENT FROM ADD::::
+		$concoction = Concoction::findOrFail($id);
+
+		$concoction->title = $title;
+		$concoction->reference_link = $reference_link;
+		$concoction->ingredients = $ingredients;
+		$concoction->directions = $directions;
+		if($user_made_this == null){
+			$user_made_this = false;
+		}
+		$concoction->user_made_this = $user_made_this;
+
+
+		//Replace tags later
+		$dinner = Tag::where('name', '=', 'dinner')->first();
+
+		$concoction->save();
+
+		$concoction->tags()->attach($dinner); 
+
+		return Redirect::to('/view-concoction/1234');
+	}
+});
+
 Route::get('/view-concoction/{id}', function($id)
 {
 	return View::make('view_concoction')->with('id', $id);
