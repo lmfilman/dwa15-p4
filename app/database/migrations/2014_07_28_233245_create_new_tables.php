@@ -26,7 +26,7 @@ class CreateNewTables extends Migration {
 
 			$table->increments('id');
 			$table->timestamps();
-			$table->string('name');
+			$table->string('name')->unique();
 
 		});
 
@@ -37,10 +37,10 @@ class CreateNewTables extends Migration {
 			$table->string('reference_link');
 			$table->text('ingredients');
 			$table->text('directions');
+			$table->boolean('user_made_this')->default(false);
 			//$table->binary('photo');
 			$table->integer('user_id')->unsigned();
 			$table->timestamps();
-			$table->softDeletes();
 
 			#Foreign key to users table
 			$table->foreign('user_id')->references('id')->on('users');
