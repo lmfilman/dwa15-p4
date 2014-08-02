@@ -1,6 +1,6 @@
-@extends('_3_action_bar')
+@extends('_5_view_concoction')
 
-@section('main_content')
+@section('view_concoction_content')
 	<h1>
 		<?php echo $selected_concoction->title; ?>
 	</h1>
@@ -27,16 +27,5 @@
 	<div>
 		<label>User made this:</label>
 		<p><?php echo $selected_concoction->user_made_this; ?></p>
-	</div>
-
-	<div>
-		<label>All other concoctions</label>
-		<div>
-			<?php
-				foreach ($concoctions as $concoction){
-					echo "<a href='/view-concoction/" . $concoction->id . "'>" . $concoction->title . "</a><br>";
-				}
-			?>
-		</div>
 	</div>
 @stop

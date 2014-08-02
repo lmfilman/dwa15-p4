@@ -186,14 +186,19 @@ Route::post('/edit-concoction/{id}', function($id)
 	}
 });
 
-Route::get('/view-concoction/{id}', function($id)
+Route::get('/view-concoction/{id?}', function($id = null)
 {
-	//Get concoction from database by id
-	$selected_concoction = Concoction::findOrFail($id);
 	$concoctions = Concoction::all();
-	return View::make('view_concoction')
+	if ($id == null) {
+		return View::make('view_concoction_null')
+				->with('concoctions', $concoctions);
+	} else {
+		$selected_concoction = Concoction::findOrFail($id);	
+		return View::make('view_concoction')
 				->with('selected_concoction', $selected_concoction)
 				->with('concoctions', $concoctions);
+	}
+	
 
 });
 
