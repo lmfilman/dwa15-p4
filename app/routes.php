@@ -231,14 +231,31 @@ function get_search_results($query)
 		return Concoction::all();
 	} 
 	else {
-		return Concoction::all()->take(1);
+		$pattern = "!\s+!";
+		$replacement = " ";
+		$query = preg_replace($pattern, $replacement, $query);
+		$tokens = explode(" ", $query);
+
+		$matches = array();
+
+		foreach (Concoction::all() as $concoction){
+			$document = $concoction->title . " " . $concoction->ingredients . " " . $concoction->directions;
+			$match = false;
+			foreach ($tokens as $token){
+				if (!$match){
+					//Check for a match
+					if (strpos($document, $token) !== false ){
+						$match = true;
+					}
+				}
+			}
+			if ($match){
+				array_push($matches, $concoction);
+			}
+		}
+		return $matches;
 	}
-	//If query is 1 word, match against title, ingredients, & directions
-
-	//If query is multiple words, match both against title, ingredients & directions
-
 }
-
 Route::get('/debug', function() {
 
 	echo '<pre>';
