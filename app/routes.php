@@ -19,14 +19,51 @@ Route::get('/', function()
 
 Route::get('/sign-up', function()
 {
-	return View::make('sign_up');
+	return View::make('sign_up')
+		->with('user_input_error', false)
+		->with('user_input_error_message', '')	
+		->with('name', '')
+		->with('email', '')
+		;
 });
 
-/* TODO : 
 Route::post('/sign-up', function()
 {
+	$name = trim(Input::get('name'));
+	$email = trim(Input::get('email'));
+	$password = trim(Input::get('password'));
+	$confirm_password = trim(Input::get('confirm_password'));
+	
+	$valid_credentials = true;
+	$user_input_error_message = '';
+
+	//Verify email nonempty
+	//Verify password nonempty
+	//Verify email unique
+	//Verify email valid format (includes @, .)
+	//Verify passwords match
+	//Verify passwords >6 characters
+	
+	if ($valid_credentials){
+		
+		//Add user
+		$user = new User;
+		$user->name = $name;
+		$user->email = $email;
+		$user->password = $password;
+		$user->save();
+
+		return Redirect::to('/view-concoction/');
+	} else {
+		return View::make('sign_up')
+			->with('user_input_error', true)
+			->with('user_input_error_message', $user_input_error_message)
+			->with('name', $name)	
+			->with('email', $email)
+		;
+	}
 });
-*/
+
 Route::get('/add-concoction', function()
 {
 	return View::make('add_concoction')
@@ -99,7 +136,7 @@ Route::post('/add-concoction', function()
 
 		$concoction->tags()->attach($dinner); 
 
-		return Redirect::to('/view-concoction/1234');
+		return Redirect::to('/view-concoction/');
 	}
 
 	
@@ -182,7 +219,7 @@ Route::post('/edit-concoction/{id}', function($id)
 
 		$concoction->tags()->attach($dinner); 
 
-		return Redirect::to('/view-concoction/1234');
+		return Redirect::to('/view-concoction/');
 	}
 });
 
