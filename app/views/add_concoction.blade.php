@@ -1,4 +1,4 @@
-@extends('_4a_add_or_edit_concoction')
+@extends('_4_add_or_edit_concoction')
 
 @section('title')
   	Add concoction

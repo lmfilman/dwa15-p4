@@ -199,8 +199,45 @@ Route::get('/view-concoction/{id}', function($id)
 
 Route::get('/search-keeper', function()
 {
-	return View::make('search_keeper');
+	$query = "";
+	$results = get_search_results($query);
+	$num_results = count($results);
+
+	return View::make('search_keeper')
+				->with('query', $query)
+				->with('results', $results)
+				->with('num_results', $num_results);
+				;
 });
+
+Route::post('/search-keeper', function()
+{
+	$query = trim(Input::get('query'));
+	$results = get_search_results($query);
+	$num_results = count($results);
+
+	return View::make('search_keeper')
+				->with('query', $query)
+				->with('results', $results)
+				->with('num_results', $num_results);
+				;
+});
+
+function get_search_results($query)
+{
+	$query = strtolower($query);
+	//If query is empty string, return all results
+	if ($query == ""){
+		return Concoction::all();
+	} 
+	else {
+		return Concoction::all()->take(1);
+	}
+	//If query is 1 word, match against title, ingredients, & directions
+
+	//If query is multiple words, match both against title, ingredients & directions
+
+}
 
 Route::get('/debug', function() {
 

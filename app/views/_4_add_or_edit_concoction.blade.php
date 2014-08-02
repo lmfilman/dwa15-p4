@@ -26,10 +26,10 @@
     {{ Form::textarea('directions', $directions)}}
 
   	{{ Form::label('tags_label', 'Tags')}}
-	{{ Form::text('tags', $tags)}}
+  	{{ Form::text('tags', $tags)}}
 
-	{{ Form::label('user_made_this_label', 'I made this!')}}
-	{{ Form::checkbox('user_made_this', $user_made_this)}}
+  	{{ Form::label('user_made_this_label', 'I made this!')}}
+  	{{ Form::checkbox('user_made_this', $user_made_this)}}
 
 	@yield('add_or_edit_concoction_submit')
 
