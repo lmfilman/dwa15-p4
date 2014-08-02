@@ -189,8 +189,11 @@ Route::post('/edit-concoction/{id}', function($id)
 Route::get('/view-concoction/{id}', function($id)
 {
 	//Get concoction from database by id
-	$concoction = Concoction::findOrFail($id);
-	return View::make('view_concoction')->with('concoction', $concoction);
+	$selected_concoction = Concoction::findOrFail($id);
+	$concoctions = Concoction::all();
+	return View::make('view_concoction')
+				->with('selected_concoction', $selected_concoction)
+				->with('concoctions', $concoctions);
 
 });
 
