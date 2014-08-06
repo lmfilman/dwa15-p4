@@ -1,7 +1,7 @@
 @extends('_1_base_view')
 
 @section('body')
-	<a href='/view-concoction/'>Concoction Keeper</a>
-  	<div>Logout</div>
+	<a href='/'>Concoction Keeper</a>
+  	<a href='/log-out'>Logout</a>
   	@yield('content')
 @stop

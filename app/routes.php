@@ -21,13 +21,19 @@ Route::post('/', array('before'=> 'csrf', function()
 {
 	$credentials = Input::only('email', 'password');
 
-	if (Auth::attempt($credentials, $remember = true)){
+	if (Auth::attempt($credentials, true)){
 		return Redirect::intended('/view-concoction/')->with('flash_message', 'Welcome Back!');
 	} else {
 		return Redirect::to('/')->with('flash_message', 'Log in failed. Please try again');
 	}
 }));
 
+Route::get('/log-out', array('before'=>'auth', function()
+{
+	Auth::logout();
+
+	return Redirect::to('/');
+}));
 
 Route::get('/sign-up', array('before'=>'guest', function()
 {
@@ -44,12 +50,11 @@ Route::post('/sign-up', array('before' => 'csrf', function()
 	try{
 		$user->save();
 	} catch (Exception $e){
+		throw $e;
 		return Redirect::to('/sign-up')->with('flash_message', 'Sign up failed. Please try again.');
 	}
 
-	Auth::login($user);
-
-	return Redirect::to('/view-concoction/');
+	return Redirect::to('/');
 
 	//Need to do the following::::
 	//Verify email nonempty

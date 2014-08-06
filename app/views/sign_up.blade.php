@@ -14,7 +14,7 @@
   		{{ Form::text('email')}}
 
   		{{ Form::label('password_label', 'Password')}}
-  		{{ Form::text('password')}}
+  		{{ Form::password('password')}}
 
 		  {{ Form::submit('Submit!') }}
 		  {{ Form::close() }}
