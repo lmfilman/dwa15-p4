@@ -68,7 +68,7 @@ Route::post('/sign-up', array('before' => 'csrf', function()
 	
 }));
 
-Route::get('/add-concoction', function()
+Route::get('/add-concoction', array('before' => 'auth', function()
 {
 	return View::make('add_concoction')
 		->with('user_input_error', false)
@@ -80,9 +80,9 @@ Route::get('/add-concoction', function()
 		->with('tags', '')
 		->with('user_made_this', false)
 		;
-});
+}));
 
-Route::post('/add-concoction', function()
+Route::post('/add-concoction', array('before' => 'auth', function()
 {
 	$user_input_error = false;
 	$user_input_error_message = "";
@@ -144,9 +144,9 @@ Route::post('/add-concoction', function()
 	}
 
 	
-});
+}));
 
-Route::get('/edit-concoction/{id}', function($id)
+Route::get('/edit-concoction/{id}', array('before' => 'auth', function($id)
 {
 	//Get concoction from database by id
 	$concoction = Concoction::findOrFail($id);
@@ -163,9 +163,9 @@ Route::get('/edit-concoction/{id}', function($id)
 
 		->with('id', $id)
 		;
-});
+}));
 
-Route::post('/edit-concoction/{id}', function($id)
+Route::post('/edit-concoction/{id}', array('before' => 'auth', function($id)
 {
 	$user_input_error = false;
 	$user_input_error_message = "";
@@ -225,9 +225,9 @@ Route::post('/edit-concoction/{id}', function($id)
 
 		return Redirect::to('/view-concoction/');
 	}
-});
+}));
 
-Route::get('/view-concoction/{id?}', function($id = null)
+Route::get('/view-concoction/{id?}', array('before' => 'auth', function($id = null)
 {
 	$concoctions = Concoction::all();
 	if ($id == null) {
@@ -241,9 +241,9 @@ Route::get('/view-concoction/{id?}', function($id = null)
 	}
 	
 
-});
+}));
 
-Route::get('/search-keeper', function()
+Route::get('/search-keeper', array('before' => 'auth', function()
 {
 	$query = "";
 	$results = get_search_results($query);
@@ -254,9 +254,9 @@ Route::get('/search-keeper', function()
 				->with('results', $results)
 				->with('num_results', $num_results);
 				;
-});
+}));
 
-Route::post('/search-keeper', function()
+Route::post('/search-keeper', array('before' => 'auth', function()
 {
 	$query = trim(Input::get('query'));
 	$results = get_search_results($query);
@@ -267,7 +267,7 @@ Route::post('/search-keeper', function()
 				->with('results', $results)
 				->with('num_results', $num_results);
 				;
-});
+}));
 
 function get_search_results($query)
 {
