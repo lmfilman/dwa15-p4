@@ -230,7 +230,7 @@ Route::post('/edit-concoction/{id}', array('before' => 'auth|editor', function($
 
 Route::get('/overview', array('before' => 'auth', function()
 {
-	$concoctions = Concoction::all();
+	$concoctions = get_logged_in_users_concoctions();
 	return View::make('overview')
 			->with('concoctions', $concoctions);
 
@@ -238,7 +238,7 @@ Route::get('/overview', array('before' => 'auth', function()
 
 Route::get('/view-concoction/{id}', array('before' => 'auth|editor', function($id)
 {
-	$concoctions = Concoction::all();
+	$concoctions = get_logged_in_users_concoctions();
 	$selected_concoction = Concoction::findOrFail($id);	
 	return View::make('view_concoction')
 			->with('selected_concoction', $selected_concoction)
@@ -250,7 +250,8 @@ Route::get('/view-concoction/{id}', array('before' => 'auth|editor', function($i
 Route::get('/search-keeper', array('before' => 'auth', function()
 {
 	$query = "";
-	$results = get_search_results($query);
+	$collection = get_logged_in_users_concoctions();
+	$results = get_search_results($collection, $query);
 	$num_results = count($results);
 
 	return View::make('search_keeper')
@@ -263,7 +264,8 @@ Route::get('/search-keeper', array('before' => 'auth', function()
 Route::post('/search-keeper', array('before' => 'auth', function()
 {
 	$query = trim(Input::get('query'));
-	$results = get_search_results($query);
+	$collection = get_logged_in_users_concoctions();
+	$results = get_search_results($collection, $query);
 	$num_results = count($results);
 
 	return View::make('search_keeper')
@@ -273,12 +275,12 @@ Route::post('/search-keeper', array('before' => 'auth', function()
 				;
 }));
 
-function get_search_results($query)
+function get_search_results($collection, $query)
 {
 	$query = strtolower($query);
 	//If query is empty string, return all results
 	if ($query == ""){
-		return Concoction::all();
+		return $collection;
 	} 
 	else {
 		$pattern = "!\s+!";
@@ -288,11 +290,15 @@ function get_search_results($query)
 
 		$matches = array();
 
-		foreach (Concoction::all() as $concoction){
+		foreach ($collection as $concoction){
+
 			$document = $concoction->title . " " . $concoction->ingredients . " " . $concoction->directions;
+			$document = strtolower($document);
+			echo $document;
 			$match = false;
 			foreach ($tokens as $token){
 				if (!$match){
+					$token = strtolower($token);
 					//Check for a match
 					if (strpos($document, $token) !== false ){
 						$match = true;
@@ -305,6 +311,10 @@ function get_search_results($query)
 		}
 		return $matches;
 	}
+}
+function get_logged_in_users_concoctions(){
+	$user = Auth::user();
+	return Concoction::where('user_id', '=', $user->id)->get();
 }
 
 Route::get('/debug', function() {
