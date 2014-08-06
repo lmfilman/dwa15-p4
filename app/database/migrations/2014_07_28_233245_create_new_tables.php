@@ -18,6 +18,7 @@ class CreateNewTables extends Migration {
 			$table->string('name');
 			$table->string('email')->unique();
 			$table->string('password');
+			$table->boolean('remember_token')->default(true);
 			$table->timestamps();
 
 		});

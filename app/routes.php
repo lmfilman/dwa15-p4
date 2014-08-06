@@ -11,32 +11,47 @@
 |
 */
 
-
-Route::get('/', function()
+Route::get('/', array('before'=> 'guest', function()
 {
 	return View::make('homepage');
-});
+}));
 
-Route::get('/sign-up', function()
+
+Route::post('/', array('before'=> 'csrf', function()
 {
-	return View::make('sign_up')
-		->with('user_input_error', false)
-		->with('user_input_error_message', '')	
-		->with('name', '')
-		->with('email', '')
-		;
-});
+	$credentials = Input::only('email', 'password');
 
-Route::post('/sign-up', function()
+	if (Auth::attempt($credentials, $remember = true)){
+		return Redirect::intended('/view-concoction/')->with('flash_message', 'Welcome Back!');
+	} else {
+		return Redirect::to('/')->with('flash_message', 'Log in failed. Please try again');
+	}
+}));
+
+
+Route::get('/sign-up', array('before'=>'guest', function()
 {
-	$name = trim(Input::get('name'));
-	$email = trim(Input::get('email'));
-	$password = trim(Input::get('password'));
-	$confirm_password = trim(Input::get('confirm_password'));
-	
-	$valid_credentials = true;
-	$user_input_error_message = '';
+	return View::make('sign_up');
+}));
 
+Route::post('/sign-up', array('before' => 'csrf', function()
+{
+	$user = new User();
+	$user->name = Input::get('name');
+	$user->email = Input::get('email');
+	$user->password = Hash::make(Input::get('password'));
+
+	try{
+		$user->save();
+	} catch (Exception $e){
+		return Redirect::to('/sign-up')->with('flash_message', 'Sign up failed. Please try again.');
+	}
+
+	Auth::login($user);
+
+	return Redirect::to('/view-concoction/');
+
+	//Need to do the following::::
 	//Verify email nonempty
 	//Verify password nonempty
 	//Verify email unique
@@ -44,25 +59,7 @@ Route::post('/sign-up', function()
 	//Verify passwords match
 	//Verify passwords >6 characters
 	
-	if ($valid_credentials){
-		
-		//Add user
-		$user = new User;
-		$user->name = $name;
-		$user->email = $email;
-		$user->password = $password;
-		$user->save();
-
-		return Redirect::to('/view-concoction/');
-	} else {
-		return View::make('sign_up')
-			->with('user_input_error', true)
-			->with('user_input_error_message', $user_input_error_message)
-			->with('name', $name)	
-			->with('email', $email)
-		;
-	}
-});
+}));
 
 Route::get('/add-concoction', function()
 {

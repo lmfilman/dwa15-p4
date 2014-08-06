@@ -7,6 +7,10 @@
 	{{ HTML::style('/packages/bootstrap-3.2.0-dist/css/starter-template.css'); }}
 </head>
 <body>
+	@if(Session::get('flash_message'))
+        <div class='alert'>{{ Session::get('flash_message') }}</div>
+    @endif
+
   @yield('body')
 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
