@@ -119,8 +119,8 @@ Route::post('/add-concoction', array('before' => 'auth', function()
 			->with('user_made_this', $user_made_this)
 			;
 	} else {
-		//Replace user later
-		$chef_boyardee = User::where('name', '=', 'Chef Boyardee')->first();
+
+		$user = Auth::user();
 
 		$concoction = new Concoction;
 		$concoction->title = $title;
@@ -135,7 +135,7 @@ Route::post('/add-concoction', array('before' => 'auth', function()
 		//Replace tags later
 		$dinner = Tag::where('name', '=', 'dinner')->first();
 
-		$concoction->user()->associate($chef_boyardee);
+		$concoction->user()->associate($user);
 		$concoction->save();
 
 		$concoction->tags()->attach($dinner); 
