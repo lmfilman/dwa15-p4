@@ -22,7 +22,7 @@ Route::post('/', array('before'=> 'csrf', function()
 	$credentials = Input::only('email', 'password');
 
 	if (Auth::attempt($credentials, true)){
-		return Redirect::intended('/view-concoction/')->with('flash_message', 'Welcome Back!');
+		return Redirect::intended('/overview')->with('flash_message', 'Welcome Back!');
 	} else {
 		return Redirect::to('/')->with('flash_message', 'Log in failed. Please try again');
 	}
@@ -56,7 +56,7 @@ Route::post('/sign-up', array('before' => 'csrf', function()
 
 	Auth::login($user, true);
 
-	return Redirect::to('/');
+	return Redirect::to('/overview');
 
 	//Need to do the following::::
 	//Verify email nonempty
@@ -140,13 +140,13 @@ Route::post('/add-concoction', array('before' => 'auth', function()
 
 		$concoction->tags()->attach($dinner); 
 
-		return Redirect::to('/view-concoction/');
+		return Redirect::to('/overview');
 	}
 
 	
 }));
 
-Route::get('/edit-concoction/{id}', array('before' => 'auth', function($id)
+Route::get('/edit-concoction/{id}', array('before' => 'auth|editor', function($id)
 {
 	//Get concoction from database by id
 	$concoction = Concoction::findOrFail($id);
@@ -162,10 +162,11 @@ Route::get('/edit-concoction/{id}', array('before' => 'auth', function($id)
 		->with('user_made_this', $concoction->user_made_this)
 
 		->with('id', $id)
-		;
+		;	
+
 }));
 
-Route::post('/edit-concoction/{id}', array('before' => 'auth', function($id)
+Route::post('/edit-concoction/{id}', array('before' => 'auth|editor', function($id)
 {
 	$user_input_error = false;
 	$user_input_error_message = "";
@@ -223,22 +224,25 @@ Route::post('/edit-concoction/{id}', array('before' => 'auth', function($id)
 
 		$concoction->tags()->attach($dinner); 
 
-		return Redirect::to('/view-concoction/');
+		return Redirect::to('/overview');
 	}
 }));
 
-Route::get('/view-concoction/{id?}', array('before' => 'auth', function($id = null)
+Route::get('/overview', array('before' => 'auth', function()
 {
 	$concoctions = Concoction::all();
-	if ($id == null) {
-		return View::make('view_concoction_null')
-				->with('concoctions', $concoctions);
-	} else {
-		$selected_concoction = Concoction::findOrFail($id);	
-		return View::make('view_concoction')
-				->with('selected_concoction', $selected_concoction)
-				->with('concoctions', $concoctions);
-	}
+	return View::make('overview')
+			->with('concoctions', $concoctions);
+
+}));
+
+Route::get('/view-concoction/{id}', array('before' => 'auth|editor', function($id)
+{
+	$concoctions = Concoction::all();
+	$selected_concoction = Concoction::findOrFail($id);	
+	return View::make('view_concoction')
+			->with('selected_concoction', $selected_concoction)
+			->with('concoctions', $concoctions);
 	
 
 }));
@@ -302,6 +306,7 @@ function get_search_results($query)
 		return $matches;
 	}
 }
+
 Route::get('/debug', function() {
 
 	echo '<pre>';

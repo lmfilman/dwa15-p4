@@ -67,7 +67,7 @@ Route::filter('auth.basic', function()
 
 Route::filter('guest', function()
 {
-	if (Auth::check()) return Redirect::to('/view-concoction/');
+	if (Auth::check()) return Redirect::to('/overview');
 });
 
 /*
@@ -86,5 +86,31 @@ Route::filter('csrf', function()
 	if (Session::token() != Input::get('_token'))
 	{
 		throw new Illuminate\Session\TokenMismatchException;
+	}
+});
+
+/*
+|--------------------------------------------------------------------------
+| Check that concoction the logged in user is trying to edit is his/hers
+|--------------------------------------------------------------------------
+|
+*/
+
+Route::filter('editor', function($route)
+{
+	$concoction_id = $route->getParameter('id');
+	$concoction = Concoction::find($concoction_id);
+
+	//Redirect if concoction not found
+	if (!$concoction){
+		return Redirect::to('/overview');
+	}
+
+	$logged_in_user = Auth::user();
+	$concoction_creator = $concoction->user;
+
+	//Redirect if user trying to edit another user's concoction
+	if ($concoction_creator->id != $logged_in_user->id){
+		return Redirect::to('/overview');
 	}
 });
