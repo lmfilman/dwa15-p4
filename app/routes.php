@@ -54,6 +54,8 @@ Route::post('/sign-up', array('before' => 'csrf', function()
 		return Redirect::to('/sign-up')->with('flash_message', 'Sign up failed. Please try again.');
 	}
 
+	Auth::login($user, true);
+
 	return Redirect::to('/');
 
 	//Need to do the following::::
