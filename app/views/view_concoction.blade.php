@@ -4,6 +4,11 @@
 	<h1>
 		<?php echo $selected_concoction->title; ?>
 	</h1>
+	<?php 
+		if ($selected_concoction->image_file_name != ""){
+			echo "<img src='/images/" . $selected_concoction->image_file_name . "' width=150>";
+		}
+	?>
 	<div>
 		<label>Reference Link:</label>
 		<?php 

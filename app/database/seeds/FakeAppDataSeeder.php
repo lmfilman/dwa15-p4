@@ -20,13 +20,13 @@ class FakeAppDataSeeder extends Seeder {
 		$chef_b = new User;
 		$chef_b->name = 'Chef Boyardee';
 		$chef_b->email = 'chef.boyardee12345@gmail.com';
-		$chef_b->password = 'password';
+		$chef_b->password = Hash::make('password');
 		$chef_b->save();
 
 		$marie_c = new User;
 		$marie_c->name = 'Marie Callendar';
 		$marie_c->email = 'marie.callendar12345@yahoo.com';
-		$marie_c->password = 'password';
+		$marie_c->password = Hash::make('password');
 		$marie_c->save();
 
 		# Tags (Created using the Model Create shortcut method)
@@ -52,6 +52,7 @@ class FakeAppDataSeeder extends Seeder {
 		$chicken_pot_pie = new Concoction;
 		$chicken_pot_pie->title = 'Chicken pot pie';
 		$chicken_pot_pie->reference_link = 'http://allrecipes.com/recipe/chicken-pot-pie-ix/';
+		$chicken_pot_pie->image_file_name = 'chickenpotpie.jpg';
 		$chicken_pot_pie->ingredients = 	'1 pound skinless, boneless chicken breast halves
 											1 cup sliced carrots
 											1 cup frozen green peas
@@ -87,6 +88,7 @@ class FakeAppDataSeeder extends Seeder {
 		$quinoa_black_beans = new Concoction;
 		$quinoa_black_beans->title = 'Quinoa and black beans';
 		$quinoa_black_beans->reference_link = 'http://allrecipes.com/recipe/quinoa-and-black-beans/';
+		$quinoa_black_beans->image_file_name = 'quinoaandblackbeans.jpg';
 		$quinoa_black_beans->ingredients = 		'1 teaspoon vegetable oil
 												1 onion, chopped
 												3 cloves garlic, peeled and chopped
@@ -119,6 +121,7 @@ class FakeAppDataSeeder extends Seeder {
 		$turkey_burgers = new Concoction;
 		$turkey_burgers->title = 'Delicious Turkey Burgers';
 		$turkey_burgers->reference_link = 'http://allrecipes.com/Recipe/Actually-Delicious-Turkey-Burgers/';
+		$turkey_burgers->image_file_name = 'turkeyburger.jpg';
 		$turkey_burgers->ingredients = 		'2 pounds ground turkey
 											< 1/4 cup seasoned bread crumbs
 											1 onion diced small
@@ -146,6 +149,7 @@ class FakeAppDataSeeder extends Seeder {
 		$chocolate_chip_cookies = new Concoction;
 		$chocolate_chip_cookies->title = 'Best Chocolate Chip Cookies';
 		$chocolate_chip_cookies->reference_link = 'http://allrecipes.com/recipe/best-chocolate-chip-cookies/';
+		$chocolate_chip_cookies->image_file_name = 'chocolatechipcookies.jpg';
 		$chocolate_chip_cookies->ingredients = 	'1 cup butter, softened
 												 1 cup white sugar
 												 1 cup packed brown sugar
@@ -178,6 +182,7 @@ class FakeAppDataSeeder extends Seeder {
 		$sangria = new Concoction;
 		$sangria->title = 'Sangria! Sangria!';
 		$sangria->reference_link = 'http://allrecipes.com/recipe/sangria-sangria/';
+		$sangria->image_file_name = 'sangria.jpg';
 		$sangria->ingredients = 	'1/2 cup brandy
 									 1/4 cup lemon juice
 									 1/3 cup frozen lemonade concentrate
@@ -208,6 +213,7 @@ class FakeAppDataSeeder extends Seeder {
 		$baked_garlic_parm_chicken = new Concoction;
 		$baked_garlic_parm_chicken->title = 'Baked Garlic Parmesan Chicken';
 		$baked_garlic_parm_chicken->reference_link = 'http://allrecipes.com/recipe/baked-garlic-parmesan-chicken/';
+		$baked_garlic_parm_chicken->image_file_name = 'garlicchicken.jpg';
 		$baked_garlic_parm_chicken->ingredients = 	'2 tablespoons olive oil
 				 1 clove garlic, minced
 				 1 cup dry bread crumbs
@@ -235,6 +241,7 @@ class FakeAppDataSeeder extends Seeder {
 		$creamy_tomato_basil_soup = new Concoction;
 		$creamy_tomato_basil_soup->title = 'Rich and Creamy Tomato Basil Soup';
 		$creamy_tomato_basil_soup->reference_link = 'http://allrecipes.com/recipe/rich-and-creamy-tomato-basil-soup/';
+		$creamy_tomato_basil_soup->image_file_name = 'creamytomatosoup.jpg';
 		$creamy_tomato_basil_soup->ingredients = 	'4 tomatoes - peeled, seeded and diced
 							 4 cups tomato juice
 							 14 leaves fresh basil
@@ -262,6 +269,7 @@ class FakeAppDataSeeder extends Seeder {
 		$chicken_mole = new Concoction;
 		$chicken_mole->title = 'Chicken Mole';
 		$chicken_mole->reference_link = 'http://www.epicurious.com/recipes/food/views/Chicken-Mole-352649';
+		$chicken_mole->image_file_name = '';
 		$chicken_mole->ingredients = 	'3 tablespoons (or more) peanut oil (preferably unrefined), divided
 							5 pounds skinless boneless chicken thighs
 							3 cups low-salt chicken broth
@@ -309,6 +317,7 @@ Transfer chicken mole to bowl. Sprinkle with cilantro. Serve with warm tortillas
 		$pb_and_j->ingredients = 	'Peanut butter, jelly, & bread';
 		$pb_and_j->directions = 	'Spread peanut butter on one slice of bread. Spread jelly on the other slice.  Stick them together.';
 		$pb_and_j->reference_link = '';
+		$pb_and_j->image_file_name = '';
 		$pb_and_j->user()->associate($chef_b);
 		$pb_and_j->save();
 

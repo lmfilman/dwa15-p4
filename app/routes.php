@@ -88,6 +88,15 @@ Route::post('/add-concoction', array('before' => 'auth', function()
 	$user_input_error_message = "";
 	$title = trim(Input::get('title'));
 	$reference_link = trim(Input::get('reference_link')); //Not required
+
+	//Move file to /public/images & Store file name in database
+	$image_file_name = "";
+	if (Input::hasFile('file')){
+		$filename = str_random(12) . ".jpg";
+		$file = Input::file('file')->move(public_path() ."/images", $filename);
+		$image_file_name = $filename;
+	}
+
 	$ingredients = trim(Input::get('ingredients'));
 	$directions = trim(Input::get('directions'));
 	$tags = trim(Input::get('tags'));						//For now, space separated
@@ -125,8 +134,10 @@ Route::post('/add-concoction', array('before' => 'auth', function()
 		$concoction = new Concoction;
 		$concoction->title = $title;
 		$concoction->reference_link = $reference_link;
+		$concoction->image_file_name = $image_file_name;
 		$concoction->ingredients = $ingredients;
 		$concoction->directions = $directions;
+
 		if($user_made_this == null){
 			$user_made_this = false;
 		}
@@ -138,7 +149,7 @@ Route::post('/add-concoction', array('before' => 'auth', function()
 		$concoction->user()->associate($user);
 		$concoction->save();
 
-		$concoction->tags()->attach($dinner); 
+		//$concoction->tags()->attach($dinner); 
 
 		return Redirect::to('/overview');
 	}
@@ -172,6 +183,14 @@ Route::post('/edit-concoction/{id}', array('before' => 'auth|editor', function($
 	$user_input_error_message = "";
 	$title = trim(Input::get('title'));
 	$reference_link = trim(Input::get('reference_link')); //Not required
+
+	$image_file_name = "";
+	if (Input::hasFile('file')){
+		$filename = str_random(12) . ".jpg";
+		$file = Input::file('file')->move(public_path() ."/images", $filename);
+		$image_file_name = $filename;
+	}
+
 	$ingredients = trim(Input::get('ingredients'));
 	$directions = trim(Input::get('directions'));
 	$tags = trim(Input::get('tags'));						//For now, space separated
@@ -209,6 +228,7 @@ Route::post('/edit-concoction/{id}', array('before' => 'auth|editor', function($
 
 		$concoction->title = $title;
 		$concoction->reference_link = $reference_link;
+		$concoction->image_file_name = $image_file_name;
 		$concoction->ingredients = $ingredients;
 		$concoction->directions = $directions;
 		if($user_made_this == null){
@@ -294,7 +314,6 @@ function get_search_results($collection, $query)
 
 			$document = $concoction->title . " " . $concoction->ingredients . " " . $concoction->directions;
 			$document = strtolower($document);
-			echo $document;
 			$match = false;
 			foreach ($tokens as $token){
 				if (!$match){

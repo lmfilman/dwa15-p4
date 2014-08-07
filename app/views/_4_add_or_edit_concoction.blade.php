@@ -19,6 +19,9 @@
   	{{ Form::label('reference_link_label', 'Reference Link')}}
     {{ Form::text('reference_link', $reference_link)}}
 
+    <img src="/images/Koala.jpg" width="150">
+    {{ Form::file('file')}}
+
   	{{ Form::label('ingredients_label', 'Ingredients')}}
     {{ Form::textarea('ingredients', $ingredients)}}
 
@@ -31,7 +34,7 @@
   	{{ Form::label('user_made_this_label', 'I made this!')}}
   	{{ Form::checkbox('user_made_this', $user_made_this)}}
 
-	@yield('add_or_edit_concoction_submit')
+	 @yield('add_or_edit_concoction_submit')
 
   	{{ Form::close() }}
 @stop

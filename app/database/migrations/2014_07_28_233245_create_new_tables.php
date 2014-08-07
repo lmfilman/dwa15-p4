@@ -39,7 +39,7 @@ class CreateNewTables extends Migration {
 			$table->text('ingredients');
 			$table->text('directions');
 			$table->boolean('user_made_this')->default(false);
-			//$table->binary('photo');
+			$table->string('image_file_name');
 			$table->integer('user_id')->unsigned();
 			$table->timestamps();
 
