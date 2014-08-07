@@ -19,7 +19,14 @@
   	{{ Form::label('reference_link_label', 'Reference Link')}}
     {{ Form::text('reference_link', $reference_link)}}
 
-    <img src="/images/Koala.jpg" width="150">
+    <?php 
+      if ($image_file_name != null && $image_file_name != ""){
+          echo "<img src='/images/" . $image_file_name . "' height=150 width=150>";
+        } else {
+          echo "<img src='/images/no_image_concoction.png' height=150 width=150>";
+        }
+    ?>
+
     {{ Form::file('file')}}
 
   	{{ Form::label('ingredients_label', 'Ingredients')}}

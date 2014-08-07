@@ -1,7 +1,8 @@
 @extends('_1_base_view')
 
 @section('body')
-	<h1>Concoction Keeper</h1>
+	<img src='/images/witchesbrew.png' width=800>
+
 	<div>
 		<h2>Log in</h2>
 		<div>
