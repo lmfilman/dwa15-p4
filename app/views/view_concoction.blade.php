@@ -4,6 +4,7 @@
 	<h1>
 		<?php echo $selected_concoction->title; ?>
 	</h1>
+	<a href= <?php echo "/edit-concoction/" . $selected_concoction->id; ?>>Edit Concoction</a>
 	<?php 
 		if ($selected_concoction->image_file_name != ""){
 			echo "<img src='/images/" . $selected_concoction->image_file_name . "' width=150>";
@@ -33,4 +34,5 @@
 		<label>User made this:</label>
 		<p><?php echo $selected_concoction->user_made_this; ?></p>
 	</div>
+
 @stop
