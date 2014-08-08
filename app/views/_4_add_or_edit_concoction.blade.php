@@ -38,18 +38,13 @@
 
     <?php $all_tags = Tag::all(); ?>
     @foreach ($all_tags as $tag)
-      <?php $tag_label = $tag . "_label"; ?>
-      {{ Form::label($tag_label, $tag->name)}}
-
-      <?php 
-        $check_tag = in_array($tag->name, $concoction_tag_names); 
-      ?>
-      {{ Form::checkbox($tag->name, $tag->name, $check_tag)}}
-
+      <?php echo $tag->name; ?>
+      <?php $check_tag = in_array($tag->name, $concoction_tag_names); ?>
+      <input type="checkbox" name= <?php echo $tag->name; ?> <?php if ($check_tag) {echo "checked";} ?>>
     @endforeach
 
-  	{{ Form::label('user_made_this_label', 'I made this!')}}
-  	{{ Form::checkbox('user_made_this', 'user_made_this', $user_made_this)}}
+  	<?php echo "I made this!"; ?>
+    <input type="checkbox" name="user_made_this" <?php if ($user_made_this) {echo "checked";} ?>>
 
 	 @yield('add_or_edit_concoction_submit')
 
