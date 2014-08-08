@@ -175,13 +175,16 @@ Route::post('/add-concoction', array('before' => 'auth', function()
 
 Route::get('/delete-concoction/{id}', array('before' => 'auth|editor', function($id)
 {
-	//Get concoction from database by id
-	/*$concoction = Concoction::findOrFail($id);
-	$tags = $concoction->tags;
-	foreach ($tags as $tag){
-		$concoction->
-	}*/
-	echo "deleted concoction " . $id;
+	
+	$concoction = Concoction::findOrFail($id);
+	//Detach all tags
+	$old_concoction_tags = $concoction->tags;
+	foreach ($old_concoction_tags as $tag){
+		$concoction->tags()->detach($tag);
+	}
+	$concoction->delete();
+
+	return Redirect::to('/overview');
 
 }));
 
