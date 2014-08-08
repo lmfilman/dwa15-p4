@@ -232,7 +232,9 @@ Route::post('/edit-concoction/{id}', array('before' => 'auth|editor', function($
 
 		$concoction->title = $title;
 		$concoction->reference_link = $reference_link;
-		$concoction->image_file_name = $image_file_name;
+		if ($image_file_name != ""){
+			$concoction->image_file_name = $image_file_name;	
+		}
 		$concoction->ingredients = $ingredients;
 		$concoction->directions = $directions;
 		if($user_made_this == null){

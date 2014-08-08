@@ -26,7 +26,6 @@
           echo "<img src='/images/no_image_concoction.png' height=150 width=150>";
         }
     ?>
-
     {{ Form::file('file')}}
 
   	{{ Form::label('ingredients_label', 'Ingredients')}}
