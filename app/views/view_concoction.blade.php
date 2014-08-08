@@ -5,6 +5,7 @@
 		<?php echo $selected_concoction->title; ?>
 	</h1>
 	<a href= <?php echo "/edit-concoction/" . $selected_concoction->id; ?>>Edit Concoction</a>
+	<a href= <?php echo "/delete-concoction/" . $selected_concoction->id; ?>>Delete Concoction</a>
 	<?php 
 		if ($selected_concoction->image_file_name != ""){
 			echo "<img src='/images/" . $selected_concoction->image_file_name . "' width=150>";
