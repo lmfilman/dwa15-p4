@@ -34,11 +34,22 @@
   	{{ Form::label('directions_label', 'Directions')}}
     {{ Form::textarea('directions', $directions)}}
 
-  	{{ Form::label('tags_label', 'Tags')}}
-  	{{ Form::text('tags', $tags)}}
+  	{{ Form::label('tags_header_label', 'Tags')}}
+
+    <?php $all_tags = Tag::all(); ?>
+    @foreach ($all_tags as $tag)
+      <?php $tag_label = $tag . "_label"; ?>
+      {{ Form::label($tag_label, $tag->name)}}
+
+      <?php 
+        $check_tag = in_array($tag->name, $concoction_tag_names); 
+      ?>
+      {{ Form::checkbox($tag->name, $tag->name, $check_tag)}}
+
+    @endforeach
 
   	{{ Form::label('user_made_this_label', 'I made this!')}}
-  	{{ Form::checkbox('user_made_this', $user_made_this)}}
+  	{{ Form::checkbox('user_made_this', 'user_made_this', $user_made_this)}}
 
 	 @yield('add_or_edit_concoction_submit')
 

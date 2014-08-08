@@ -31,6 +31,14 @@
 		<p><?php echo $selected_concoction->directions; ?></p>
 	</div>
 	<div>
+		<label>Tags:</label>
+		<div><?php
+			foreach ($selected_concoction->tags as $tag) {
+				echo $tag->name . "<br>";
+			}
+			?></div>
+	</div>
+	<div>
 		<label>User made this:</label>
 		<p><?php echo $selected_concoction->user_made_this; ?></p>
 	</div>

@@ -78,7 +78,7 @@ Route::get('/add-concoction', array('before' => 'auth', function()
 		->with('image_file_name', '')
 		->with('ingredients', '')
 		->with('directions', '')
-		->with('tags', '')
+		->with('concoction_tag_names', array())
 		->with('user_made_this', false)
 		;
 }));
@@ -100,7 +100,7 @@ Route::post('/add-concoction', array('before' => 'auth', function()
 
 	$ingredients = trim(Input::get('ingredients'));
 	$directions = trim(Input::get('directions'));
-	$tags = trim(Input::get('tags'));						//For now, space separated
+
 	$user_made_this = Input::get('user_made_this');
 
 	//Form validation
@@ -117,6 +117,17 @@ Route::post('/add-concoction', array('before' => 'auth', function()
 		$user_input_error_message = "Your Concoction needs directions!";
 	}
 
+	//Get tag names
+	$tag_names = array();
+	$all_tags = Tag::all();
+	foreach ($all_tags as $tag){
+		$tag_name = $tag->name;
+		$checked_tag = Input::get($tag_name);
+		if ($checked_tag){
+			array_push($tag_names, $tag_name);
+		}
+	}
+
 	if ($user_input_error){
 		return View::make('add_concoction')
 			->with('user_input_error', $user_input_error)
@@ -126,7 +137,7 @@ Route::post('/add-concoction', array('before' => 'auth', function()
 			->with('ingredients', $ingredients)
 			->with('image_file_name', $image_file_name)
 			->with('directions', $directions)
-			->with('tags', $tags)
+			->with('concoction_tag_names', $tag_names)
 			->with('user_made_this', $user_made_this)
 			;
 	} else {
@@ -145,13 +156,14 @@ Route::post('/add-concoction', array('before' => 'auth', function()
 		}
 		$concoction->user_made_this = $user_made_this;
 
-		//Replace tags later
-		$dinner = Tag::where('name', '=', 'dinner')->first();
-
 		$concoction->user()->associate($user);
 		$concoction->save();
 
-		//$concoction->tags()->attach($dinner); 
+		foreach ($tag_names as $tag_name){
+			$tag = Tag::where('name', '=', $tag_name)->first();
+			$concoction->tags()->attach($tag);
+		}
+
 
 		return Redirect::to('/overview');
 	}
@@ -159,10 +171,29 @@ Route::post('/add-concoction', array('before' => 'auth', function()
 	
 }));
 
+Route::get('/delete-concoction/{id}', array('before' => 'auth|editor', function($id)
+{
+	//Get concoction from database by id
+	/*$concoction = Concoction::findOrFail($id);
+	$tags = $concoction->tags;
+	foreach ($tags as $tag){
+		$concoction->
+	}*/
+	echo "deleted concoction " . $id;
+
+}));
+
 Route::get('/edit-concoction/{id}', array('before' => 'auth|editor', function($id)
 {
 	//Get concoction from database by id
 	$concoction = Concoction::findOrFail($id);
+
+	//Get tag names
+	$concoction_tag_objects = $concoction->tags;
+	$concoction_tag_names = array();
+	foreach ($concoction_tag_objects as $tag){
+		array_push($concoction_tag_names, $tag->name);
+	}
 
 	return View::make('edit_concoction')
 		->with('user_input_error', false)
@@ -172,7 +203,7 @@ Route::get('/edit-concoction/{id}', array('before' => 'auth|editor', function($i
 		->with('image_file_name', $concoction->image_file_name)
 		->with('ingredients', $concoction->ingredients)
 		->with('directions', $concoction->directions)
-		->with('tags', $concoction->tags)
+		->with('concoction_tag_names', $concoction_tag_names)
 		->with('user_made_this', $concoction->user_made_this)
 
 		->with('id', $id)
@@ -196,7 +227,18 @@ Route::post('/edit-concoction/{id}', array('before' => 'auth|editor', function($
 
 	$ingredients = trim(Input::get('ingredients'));
 	$directions = trim(Input::get('directions'));
-	$tags = trim(Input::get('tags'));						//For now, space separated
+	
+	//Get tag names
+	$tag_names = array();
+	$all_tags = Tag::all();
+	foreach ($all_tags as $tag){
+		$tag_name = $tag->name;
+		$checked_tag = Input::get($tag_name);
+		if ($checked_tag){
+			array_push($tag_names, $tag_name);
+		}
+	}
+
 	$user_made_this = Input::get('user_made_this');
 
 	//Form validation
@@ -222,7 +264,7 @@ Route::post('/edit-concoction/{id}', array('before' => 'auth|editor', function($
 			->with('image_file_name', $image_file_name)
 			->with('ingredients', $ingredients)
 			->with('directions', $directions)
-			->with('tags', $tags)
+			->with('concoction_tag_names', $tags)
 			->with('user_made_this', $user_made_this)
 			->with('id', $id)
 			;
@@ -242,13 +284,18 @@ Route::post('/edit-concoction/{id}', array('before' => 'auth|editor', function($
 		}
 		$concoction->user_made_this = $user_made_this;
 
-
-		//Replace tags later
-		$dinner = Tag::where('name', '=', 'dinner')->first();
-
 		$concoction->save();
 
-		$concoction->tags()->attach($dinner); 
+		//Detach all tags
+		$old_concoction_tags = $concoction->tags;
+		foreach ($old_concoction_tags as $tag){
+			$concoction->tags()->detach($tag);
+		}
+		//Attach new tags
+		foreach ($tag_names as $tag_name){
+			$tag = Tag::where('name', '=', $tag_name)->first();
+			$concoction->tags()->attach($tag);
+		}
 
 		return Redirect::to('/overview');
 	}
