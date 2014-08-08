@@ -151,10 +151,12 @@ Route::post('/add-concoction', array('before' => 'auth', function()
 		$concoction->ingredients = $ingredients;
 		$concoction->directions = $directions;
 
-		if($user_made_this == null){
-			$user_made_this = false;
+		if($user_made_this == 1){
+			$concoction->user_made_this = true;
+		} 
+		else {
+			$concoction->user_made_this = false;
 		}
-		$concoction->user_made_this = $user_made_this;
 
 		$concoction->user()->associate($user);
 		$concoction->save();
@@ -279,10 +281,13 @@ Route::post('/edit-concoction/{id}', array('before' => 'auth|editor', function($
 		}
 		$concoction->ingredients = $ingredients;
 		$concoction->directions = $directions;
-		if($user_made_this == null){
-			$user_made_this = false;
+		
+		if($user_made_this == 1){
+			$concoction->user_made_this = true;
+		} 
+		else {
+			$concoction->user_made_this = false;
 		}
-		$concoction->user_made_this = $user_made_this;
 
 		$concoction->save();
 

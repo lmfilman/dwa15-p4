@@ -318,6 +318,7 @@ Transfer chicken mole to bowl. Sprinkle with cilantro. Serve with warm tortillas
 		$pb_and_j->directions = 	'Spread peanut butter on one slice of bread. Spread jelly on the other slice.  Stick them together.';
 		$pb_and_j->reference_link = '';
 		$pb_and_j->image_file_name = '';
+		$pb_and_j->user_made_this = true;
 		$pb_and_j->user()->associate($chef_b);
 		$pb_and_j->save();
 
