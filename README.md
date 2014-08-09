@@ -7,11 +7,11 @@ A Laravel web application which allows users to manage their own personal cookbo
 This application demonstrates knowledge of the Laravel framework, the MVC pattern, Object-relational mapping with Eloquent, database migrations, & user authentication.
 
 ## How to access the application:
-1. Sign up with a unique email address
+Sign up with a unique email address
 
 OR 
 
-2. Check out the application using either of the following credentials:
+Check out the application using either of the following credentials:
 
 * Marie Callendar: {email = "marie.callendar12345@yahoo.com", password = "password"}
 
@@ -37,17 +37,16 @@ OR
 
 ## Future Plans
 ### Bug Fixes / Tasks
-1. Add more user validation using Laravel's built-in Validation helper:
-
+Add more user validation using Laravel's built-in Validation helper:
 * Maximum number of characters for text input (currently breaks the app)
 * Sign up email/password requirements
 * Photo upload maximum size
 
-2. Move controller logic from routes to separate controller files
+Move controller logic from routes to separate controller files
 
-3. Isolate common functionalities duplicated in the code & put into helper functions
+Isolate common functionalities duplicated in the code & put into helper functions
 
-4. Make list of concoctions on /overview page collapsible
+Make list of concoctions on /overview page collapsible
 
 ### Features
 * Users can export recipes or the entire cookbook
