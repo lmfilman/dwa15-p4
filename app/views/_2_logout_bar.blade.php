@@ -2,11 +2,6 @@
 
 @section('body')
 
-	@if(Session::get('flash_message'))
-		<div class='alert alert-success container'>
-		    {{ Session::get('flash_message') }}
-		</div>
-  	@endif
 	<div class="container">
 		<div class="page-header" role="navigation">
 	  		<ul class="nav nav-pills pull-right">

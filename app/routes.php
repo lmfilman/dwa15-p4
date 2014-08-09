@@ -131,6 +131,7 @@ Route::post('/add-concoction', array('before' => 'auth', function()
 	}
 
 	if ($user_input_error){
+
 		return View::make('add_concoction')
 			->with('user_input_error', $user_input_error)
 			->with('user_input_error_message', $user_input_error_message)	
@@ -226,6 +227,10 @@ Route::post('/edit-concoction/{id}', array('before' => 'auth|editor', function($
 		$file = Input::file('file')->move(public_path() ."/images", $filename);
 		$image_file_name = $filename;
 	}
+	if ($image_file_name == ""){
+		$concoction = Concoction::findOrFail($id);
+		$image_file_name = $concoction->image_file_name;	
+	}
 
 	$ingredients = trim(Input::get('ingredients'));
 	$directions = trim(Input::get('directions'));
@@ -267,7 +272,7 @@ Route::post('/edit-concoction/{id}', array('before' => 'auth|editor', function($
 			->with('image_file_name', $image_file_name)
 			->with('ingredients', $ingredients)
 			->with('directions', $directions)
-			->with('concoction_tag_names', $tags)
+			->with('concoction_tag_names', $tag_names)
 			->with('user_made_this', $user_made_this)
 			->with('id', $id)
 			;
@@ -277,9 +282,9 @@ Route::post('/edit-concoction/{id}', array('before' => 'auth|editor', function($
 
 		$concoction->title = $title;
 		$concoction->reference_link = $reference_link;
-		if ($image_file_name != ""){
-			$concoction->image_file_name = $image_file_name;	
-		}
+		
+		$concoction->image_file_name = $image_file_name;
+
 		$concoction->ingredients = $ingredients;
 		$concoction->directions = $directions;
 		

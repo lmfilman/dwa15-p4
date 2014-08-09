@@ -5,7 +5,7 @@
 @stop
 
 @section('add_or_edit_concoction_header')
-  	<div>Edit concoction <?php echo $id; ?></div>
+  	<h1>Edit concoction</h1>
 @stop
 
 @section('add_or_edit_concoction_url')
@@ -13,5 +13,5 @@
 @stop
 
 @section('add_or_edit_concoction_submit')
-	{{ Form::submit('Edit concoction!') }}
+	{{ Form::submit('Edit concoction!', array('class'=>'btn btn-lg btn-primary')) }}
 @stop
