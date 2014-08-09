@@ -8,7 +8,9 @@
 </head>
 <body>
 	@if(Session::get('flash_message'))
-        <div class='alert'>{{ Session::get('flash_message') }}</div>
+        <div class='alert alert-danger container'>
+          {{ Session::get('flash_message') }}
+        </div>
     @endif
 
   @yield('body')

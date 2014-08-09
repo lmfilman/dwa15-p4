@@ -24,7 +24,7 @@ Route::post('/', array('before'=> 'csrf', function()
 	if (Auth::attempt($credentials, true)){
 		return Redirect::intended('/overview')->with('flash_message', 'Welcome Back!');
 	} else {
-		return Redirect::to('/')->with('flash_message', 'Log in failed. Please try again');
+		return Redirect::to('/')->with('flash_message', 'Login unsuccessful: Please edit your email or password field(s).');
 	}
 }));
 

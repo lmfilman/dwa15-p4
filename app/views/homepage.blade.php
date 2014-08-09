@@ -1,27 +1,38 @@
 @extends('_1_base_view')
 
 @section('body')
-	<img src='/images/witchesbrew.png' width=800>
+	<div class = "container">
+		<div class="span12">
+			<img src='/images/witchesbrew.png' width=750>
+			<div class="row">
+				<div class="col-md-4">
+					<h2>Log in</h2>
+					<div>
+				  		{{ Form::open(array('url' => '/')) }}
 
-	<div>
-		<h2>Log in</h2>
-		<div>
-	  		{{ Form::open(array('url' => '/')) }}
+				  		<table class='table'>
+				    		<tr>
+				    			<td>{{ Form::label('email_label', 'Email')}}</td>
+				    			<td>{{ Form::text('email') }}</td>
+				    		</tr>
+				    		<tr>
+				    			<td>{{ Form::label('password_label', 'Password')}}  </td>
+				    			<td>{{ Form::password('password') }}</td>
+				    		</tr>	
+			    		</table>
+			    		
+			    		{{ Form::submit('Submit', array('class'=>'btn btn-lg btn-primary')) }}
 
-    		{{ Form::label('email_label', 'Email')}}
-    		{{ Form::text('email') }}
-
-    		{{ Form::label('password_label', 'Password')}}    		
-    		{{ Form::password('password') }}
-
-    		{{ Form::submit('Submit') }}
-
-			{{ Form::close() }}
-	  	</div>
-	</div>
-	or
-	<div>
-		<h2>New to Concoction Keeper?</h2>
-		<a href="/sign-up">Sign up!</a>
+						{{ Form::close() }}
+				  	</div>
+				</div>
+				<div class="col-md-6">
+					<h2>New to Concoction Keeper?</h2>
+					<a href="/sign-up" class="btn btn-lg btn-success">
+						Sign up!
+					</a>
+				</div>
+			</div>
+		</div>
 	</div>
 @stop
