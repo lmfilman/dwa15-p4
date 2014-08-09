@@ -14,7 +14,7 @@
 	  				<a href="/log-out">Log out</a>
 	  			</li>
 	  		</ul>
-			<h3><a href='/'><img src='/images/header.png' width=400></h3>
+			<h3><a href='/'><img src='/images/header.png' width=400></img></a></h3>
 	    </div>
 	</div>
 
