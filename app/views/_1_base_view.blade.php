@@ -7,7 +7,6 @@
 	{{ HTML::style('/packages/bootstrap-3.2.0-dist/css/starter-template.css'); }}
 </head>
 <body>
-
   @yield('body')
 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

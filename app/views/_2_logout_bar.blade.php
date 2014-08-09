@@ -1,8 +1,18 @@
 @extends('_1_base_view')
 
 @section('body')
-	<a href='/'><img src='/images/header.png' height=75></a>
 
-  	<a href='/log-out'>Logout</a>
+	<div class="container">
+		<div class="page-header" role="navigation">
+	  		<ul class="nav nav-pills pull-right">
+	  			<li>
+	  				<a href="/log-out">Log out</a>
+	  			</li>
+	  		</ul>
+			<h3><a href='/'><img src='/images/header.png' width=400></h3>
+	    </div>
+	</div>
+
   	@yield('content')
+
 @stop
