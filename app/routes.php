@@ -19,10 +19,13 @@ Route::get('/', array('before'=> 'guest', function()
 
 Route::post('/', array('before'=> 'csrf', function()
 {
-	$credentials = Input::only('email', 'password');
+	$email = Input::get('email');
+	$password = Input::get('password');
 
-	if (Auth::attempt($credentials, true)){
-		return Redirect::intended('/overview')->with('flash_message', 'Welcome Back!');
+	if (Auth::attempt(array('email' => $email, 'password' => $password), true)){
+		$user= User::where("email", "=", $email)->first();
+
+		return Redirect::intended('/overview')->with('flash_message', 'Welcome Back '. $user->name .'!');
 	} else {
 		return Redirect::to('/')->with('flash_message', 'Login unsuccessful: Please edit your email or password field(s).');
 	}
