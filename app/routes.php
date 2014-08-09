@@ -50,6 +50,21 @@ Route::post('/sign-up', array('before' => 'csrf', function()
 	$user->email = Input::get('email');
 	$user->password = Hash::make(Input::get('password'));
 
+	$user_input_error = false;
+	if ($user->name === '') {
+		$user_input_error = true;
+	}
+	elseif ($user->email === '') {
+		$user_input_error = true;
+	}
+	elseif ($user->password === '') {
+		$user_input_error = true;
+	}
+
+	if ($user_input_error){
+		return Redirect::to('/sign-up')->with('flash_message', 'Sign up failed. Please try again.');
+	}
+
 	try{
 		$user->save();
 	} catch (Exception $e){

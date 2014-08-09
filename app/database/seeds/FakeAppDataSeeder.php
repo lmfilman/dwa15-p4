@@ -37,12 +37,12 @@ class FakeAppDataSeeder extends Seeder {
 		$dessert 		= Tag::create(array('name' => 'dessert'));
 		$drink         	= Tag::create(array('name' => 'drink'));
 		$pricey       	= Tag::create(array('name' => 'pricey'));
-		$comfort   		= Tag::create(array('name' => 'comfort food'));
+		$comfort   		= Tag::create(array('name' => 'comfort'));
 		$yummy         	= Tag::create(array('name' => 'yummy'));
 		$soup         	= Tag::create(array('name' => 'soup'));
 		$salad         	= Tag::create(array('name' => 'salad'));
 		$side         	= Tag::create(array('name' => 'side'));
-		$main		    = Tag::create(array('name' => 'main dish'));
+		$main		    = Tag::create(array('name' => 'main'));
 		$vegetarian		= Tag::create(array('name' => 'vegetarian'));
 
 		# Concoctions
