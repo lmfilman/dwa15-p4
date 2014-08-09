@@ -16,7 +16,7 @@
 					if ($result->image_file_name != ""){
 						echo "<img src='/images/" . $result->image_file_name . "' height=100 width=100>";
 					} else {
-						echo "<img src='/images/no_image_concoction.png' height=100 width=100>";
+						echo "<img src='/restricted_images/no_image_concoction.png' height=100 width=100>";
 					}
 					echo "</a>";
 	  				?>

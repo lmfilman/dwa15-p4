@@ -10,7 +10,7 @@
 		if ($selected_concoction->image_file_name != ""){
 			echo "<img src='/images/" . $selected_concoction->image_file_name . "' width=200>";
 		} else {
-			echo "<img src='/images/no_image_concoction.png' width=200>";
+			echo "<img src='/restricted_images/no_image_concoction.png' width=200>";
 		}
 	?>
 	<?php

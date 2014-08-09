@@ -22,7 +22,7 @@
       if ($image_file_name != null && $image_file_name != ""){
           echo "<img src='/images/" . $image_file_name . "' height=150 width=150>";
         } else {
-          echo "<img src='/images/no_image_concoction.png' height=150 width=150>";
+          echo "<img src='/restricted_images/no_image_concoction.png' height=150 width=150>";
         }
     ?>
     <br>
