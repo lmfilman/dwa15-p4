@@ -74,6 +74,7 @@ class FakeAppDataSeeder extends Seeder {
 		//TODO: $chicken_pot_pie->photo = '';
 
 		$chicken_pot_pie->user()->associate($marie_c);
+		$chicken_pot_pie->user_made_this = true;
 		$chicken_pot_pie->save();
 
 		$chicken_pot_pie->tags()->attach($dinner); 
@@ -169,6 +170,7 @@ class FakeAppDataSeeder extends Seeder {
 		//TODO: $chocolate_chip_cookies->photo = '';
 
 		$chocolate_chip_cookies->user()->associate($chef_b);
+		$chocolate_chip_cookies->user_made_this = true;
 		$chocolate_chip_cookies->save();
 
 		$chocolate_chip_cookies->tags()->attach($dessert); 
