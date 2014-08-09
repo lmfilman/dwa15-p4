@@ -366,7 +366,14 @@ function get_search_results($collection, $query)
 
 		foreach ($collection as $concoction){
 
-			$document = $concoction->title . " " . $concoction->ingredients . " " . $concoction->directions;
+			$tag_names = array();
+			$tags = $concoction->tags;
+	  		foreach ($tags as $tag) {
+		  		array_push($tag_names, $tag->name);
+		  	}
+		  	$tag_texts = join(" ", $tag_names);
+
+			$document = $concoction->title . " " . $concoction->ingredients . " " . $concoction->directions . " " . $tag_texts;
 			$document = strtolower($document);
 			$match = false;
 			foreach ($tokens as $token){
