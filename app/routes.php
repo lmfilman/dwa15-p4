@@ -50,7 +50,6 @@ Route::post('/sign-up', array('before' => 'csrf', function()
 	try{
 		$user->save();
 	} catch (Exception $e){
-		throw $e;
 		return Redirect::to('/sign-up')->with('flash_message', 'Sign up failed. Please try again.');
 	}
 

@@ -2,9 +2,14 @@
 
 @section('body')
 	<div class = "container">
-		<div class="span12">
+		<div>
+			@if(Session::get('flash_message'))
+		        <div class='alert alert-danger container'>
+		          {{ Session::get('flash_message') }}
+		        </div>
+  			@endif
 			<img src='/images/witchesbrew.png' width=750>
-			<div class="row">
+			<div class="row container">
 				<div class="col-md-4">
 					<h2>Log in</h2>
 					<div>
